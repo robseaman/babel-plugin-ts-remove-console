@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`babel-plugin-ts-remove-console handles basic 1`] = `
+"function foo() {
+  blah();
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles bound-excludes 1`] = `
+"function foo() {
+  const a = function () {};
+
+  a();
+  const b = console.error.bind(console);
+  b(\\"asdf\\");
+  blah();
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles excludes 1`] = `
+"function foo() {
+  console.error(\\"bar\\");
+  blah();
+  console.info(\\"blah\\");
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles guards 1`] = `
+"function foo() {
+  true && void 0;
+  blah();
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles local-binding 1`] = `
+"function foo(console) {
+  console.foo(\\"hi\\");
+  const bar = console.foo.bind(console);
+}
+
+function bar(a) {
+  const {
+    console
+  } = a;
+
+  a.b = console => console.bar(\\"bar\\");
+
+  if (console.foo.call(console, \\"bar\\")) {
+    return;
+  }
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles member-expr-assignment-no-op 1`] = `
+"function foo() {
+  console.foo = function () {};
+
+  console.error = function () {};
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles member-expr-no-op 1`] = `
+"const a = function () {};
+
+a();
+
+const b = function () {};
+
+b(\\"asdf\\");
+var x = function () {} ? void 0 : foo();
+
+function foo() {
+  if (function () {}) {}
+}"
+`;
+
+exports[`babel-plugin-ts-remove-console handles replace-with-empty-block 1`] = `
+"if (blah) {}
+
+for (;;) {}
+
+for (var blah in []) {}
+
+for (var blah of []) {}
+
+while (blah) {}
+
+do {} while (blah);"
+`;
+
+exports[`babel-plugin-ts-remove-console handles top-level 1`] = `
+"true && void 0;
+blah();"
+`;
+
+exports[`babel-plugin-ts-remove-console handles top-level-stmts 1`] = `"blah();"`;
