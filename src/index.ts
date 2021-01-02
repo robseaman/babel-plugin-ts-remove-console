@@ -115,9 +115,9 @@ export default function transformRemoveLogger(
             path.parentPath.isAssignmentExpression() &&
             path.parentKey === 'left'
           ) {
-            (path.parentPath.get('right') as NodePath<
-              t.AssignmentExpression
-            >).replaceWith(createNoop());
+            (path.parentPath.get(
+              'right',
+            ) as NodePath<t.AssignmentExpression>).replaceWith(createNoop());
           } else {
             path.replaceWith(createNoop());
           }
